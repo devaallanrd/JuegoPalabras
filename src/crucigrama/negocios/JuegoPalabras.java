@@ -5,15 +5,10 @@
  */
 package crucigrama.negocios;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import crucigrama.modelo.Palabra;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -23,26 +18,26 @@ public class JuegoPalabras implements IJuegoPalabras {
   
    
     
-    private String[] listaPalabras; //Investigar Map
+    private Map listaPalabras; //Investigar Map
     private Random rand;
     private ICeldas[][] cuadricula;
     private boolean siguiente = true;
-    LinkedList<Palabra> construirMejorJuego;
-    
-    
 
-    public JuegoPalabras(String[] list) {
-//        this(listaPalabras, init, true);
-        listaPalabras = list;
+    public void initPalabras(){
+        listaPalabras.put("Hola", "Algo Aqui");
+        listaPalabras.put("Hello", "Other site");
+    }
+    public JuegoPalabras(Map listaPalabras, long init) {
+        this(listaPalabras, init, true);
+        initPalabras();
         this.actualizaTam();
         int retries = 0;
         do {
             try {
-                construirMejorJuego = this.construirMejorJuego(list);
+                this.construirMejorJuego();
                 retries = 0;
             }
-            catch (Exception e) {
-                //System.out.println(e);
+            catch (ExcepcionJuego e) {
                 this.limpiarJuego();
                 if ((double)(++retries) <= 1000.0) continue;
                 retries = 1;
@@ -52,13 +47,7 @@ public class JuegoPalabras implements IJuegoPalabras {
         this.setUserIndices();
     }
 
-    public LinkedList<Palabra> getConstruirMejorJuego() {
-        return construirMejorJuego;
-    }
-
-    
-    
-    JuegoPalabras(String[] listaPalabras, long init, boolean test) {
+    JuegoPalabras(Map listaPalabras, long init, boolean test) {
         this.listaPalabras = listaPalabras;
         this.rand = new Random(init);
     }
@@ -135,21 +124,10 @@ public class JuegoPalabras implements IJuegoPalabras {
         }
     }
 
-   // String[] list = new String[3];
-    
-    //--------------------------------------------------------------------------------------
-    
-    private LinkedList<Palabra> construirMejorJuego(String[] list) {
-        
-      //  String[] hsbc =  new String[this.listaPalabras.keySet().size()];
-       // String[] hsbc =  new String[this.list.length];
-       // String[] list = (String[]) this.listaPalabras.keySet().toArray(hsbc);
-       // String[] lista = (String[]) this.list.toArray(hsbc); 
-       
-     
-        
-        System.out.println(Arrays.toString(list) +"/ "+ list.length);
-        LinkedList <Palabra> lista_mejorJuego = new LinkedList<>();
+    private void construirMejorJuego() throws ExcepcionJuego {
+        String[] hsbc =  new String[this.listaPalabras.keySet().size()];
+      
+        String[] list = (String[]) this.listaPalabras.keySet().toArray(hsbc);
         
         int remaining = list.length;
         boolean[] used = new boolean[list.length];
@@ -160,27 +138,21 @@ public class JuegoPalabras implements IJuegoPalabras {
             ++i;
         }
         this.limpiarJuego();
-        
         while (remaining > 0) {
             Posicion pos;
             int choose = 0;
             i = 0;
             while (i < list.length) {
                 scores[i] = -1;
-                
                 ++i;
             }
-           
             int n = 0;
-            while (n < (list.length)) {
-               
+            while (n < list.length) {
                 if (!used[n] && (pos = this.obtenerMejorPosicion(list[n])) != null) {
                     scores[n] = this.puntosPalabra(list[n], pos);
-                  
                 }
                 ++n;
             }
-          
             int numbest = 0;
             int bestscore = scores[0];
             n = 0;
@@ -188,7 +160,6 @@ public class JuegoPalabras implements IJuegoPalabras {
                 if (scores[n] == bestscore) {
                     ++numbest;
                 }
-              
                 if (scores[n] > bestscore) {
                     bestscore = scores[n];
                     numbest = 1;
@@ -196,12 +167,11 @@ public class JuegoPalabras implements IJuegoPalabras {
                 ++n;
             }
             if (bestscore < 0) {
-                //throw new ExcepcionJuego(this);
+                throw new ExcepcionJuego(this);
             }
             int k = this.rand.nextInt(numbest);
             numbest = 0;
             n = 0;
-           
             while (n < list.length) {
                 if (scores[n] == bestscore) {
                     if (numbest == k) {
@@ -213,20 +183,13 @@ public class JuegoPalabras implements IJuegoPalabras {
             }
             pos = this.obtenerMejorPosicion(list[choose]);
             this.colocarPalabra(list[choose], pos);
-            lista_mejorJuego.add(new Palabra(list[choose], pos.x, pos.y, pos.direccion.getNombre()));
             used[choose] = true;
             --remaining;
         }
-        return lista_mejorJuego;
     }
 
-    void construirJuego() {
-        //this.listaPalabras
-        //ArrayList words = new ArrayList(this.listaPalabras.keyS);
-       
-       // LinkedList<String> words = new LinkedList(this.listaPalabras);
-       LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
-       
+    void construirJuego() throws ExcepcionJuego {
+        ArrayList words = new ArrayList(this.listaPalabras.keySet());
         Collections.shuffle(words, this.rand);
         Iterator it = words.iterator();
         while (it.hasNext()) {
@@ -234,7 +197,7 @@ public class JuegoPalabras implements IJuegoPalabras {
             Posicion pos = this.obtenerMejorPosicion(nextWord);
            
             if (pos == null) {
-               // throw new ExcepcionJuego(this);
+                throw new ExcepcionJuego(this);
             }
           
                 this.colocarPalabra(nextWord, pos);
@@ -243,9 +206,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     int contarLetras() {
         int count = 0;
-        LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
-       // Iterator it = this.listaPalabras.keySet().iterator();
-        Iterator it = words.iterator();
+        Iterator it = this.listaPalabras.keySet().iterator();
         while (it.hasNext()) {
             String nextWord = (String)it.next();
             count += nextWord.length();
@@ -280,9 +241,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     int getPalabraMasLarga() {
         int masLarga = 0;
-         LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
-       // Iterator it = this.listaPalabras.keySet().iterator();
-        Iterator it = words.iterator();
+        Iterator it = this.listaPalabras.keySet().iterator();
         while (it.hasNext()) {
             String nextWord = (String)it.next();
             masLarga = Math.max(masLarga, nextWord.length());
@@ -292,11 +251,10 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     int getPalabraMasCorta() {
         int len = Integer.MAX_VALUE;
-          LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
-        if (words.size() == 0) {
+        if (this.listaPalabras.size() == 0) {
             return 0;
         }
-       Iterator it = words.iterator();
+        Iterator it = this.listaPalabras.keySet().iterator();
         while (it.hasNext()) {
             len = Math.min(len, ((String)it.next()).length());
         }
@@ -490,7 +448,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     }
 
     @Override
-    public String[] getListaPalabras() {
+    public Map getListaPalabras() {
         return this.listaPalabras;
     }
 
@@ -499,24 +457,24 @@ public class JuegoPalabras implements IJuegoPalabras {
         return this.cuadricula[x][y];
     }
 
-//    @Override
-//    public Map getPistas(Direccion d) {
-//        TreeMap esperado = new TreeMap();
-//        int i = 0;
-//        while (i < this.cuadricula[0].length) {
-//            int j = 0;
-//            while (j < this.cuadricula.length) {
-//                String palabra = this.getPalabraEn(j, i, d);
-//                if (palabra != null) {
-//                    esperado.put(this.getCelda(j, i).getIndexUsuario(),
-//                    this.listaPalabras.get(palabra));
-//                }
-//                ++j;
-//            }
-//            ++i;
-//        }
-//        return esperado;
-//    }
+    @Override
+    public Map getPistas(Direccion d) {
+        TreeMap esperado = new TreeMap();
+        int i = 0;
+        while (i < this.cuadricula[0].length) {
+            int j = 0;
+            while (j < this.cuadricula.length) {
+                String palabra = this.getPalabraEn(j, i, d);
+                if (palabra != null) {
+                    esperado.put(this.getCelda(j, i).getIndexUsuario(),
+                    this.listaPalabras.get(palabra));
+                }
+                ++j;
+            }
+            ++i;
+        }
+        return esperado;
+    }
 
     @Override
     public Dimension getDimension() {

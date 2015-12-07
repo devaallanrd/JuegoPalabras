@@ -69,9 +69,9 @@ public class Ventana extends javax.swing.JFrame {
         list[0] = "Jose";
         list[1] = "Allan";
         list[2] = "Jose";
-        juego= new JuegoPalabras(list);
-        LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
-        System.out.println(construirMejorJuego);
+     //   juego= new JuegoPalabras(list);
+       // LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
+     //   System.out.println(construirMejorJuego);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

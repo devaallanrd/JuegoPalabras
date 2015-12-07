@@ -23,7 +23,7 @@ public class JuegoPalabrasResp implements IJuegoPalabras {
   
    
     
-    private String[] listaPalabras; //Investigar Map
+    private Map listaPalabras; //Investigar Map
     private Random rand;
     private ICeldas[][] cuadricula;
     private boolean siguiente = true;
@@ -57,7 +57,7 @@ public class JuegoPalabrasResp implements IJuegoPalabras {
 
     
     
-    JuegoPalabrasResp(String[] listaPalabras, long init, boolean test) {
+    JuegoPalabrasResp(Map listaPalabras, long init, boolean test) {
         this.listaPalabras = listaPalabras;
         this.rand = new Random(init);
     }
@@ -489,7 +489,7 @@ public class JuegoPalabrasResp implements IJuegoPalabras {
     }
 
     @Override
-    public String[] getListaPalabras() {
+    public Map getListaPalabras() {
         return this.listaPalabras;
     }
 
@@ -498,24 +498,24 @@ public class JuegoPalabrasResp implements IJuegoPalabras {
         return this.cuadricula[x][y];
     }
 
-//    @Override
-//    public Map getPistas(Direccion d) {
-//        TreeMap esperado = new TreeMap();
-//        int i = 0;
-//        while (i < this.cuadricula[0].length) {
-//            int j = 0;
-//            while (j < this.cuadricula.length) {
-//                String palabra = this.getPalabraEn(j, i, d);
-//                if (palabra != null) {
-//                    esperado.put(this.getCelda(j, i).getIndexUsuario(),
-//                    this.listaPalabras.get(palabra));
-//                }
-//                ++j;
-//            }
-//            ++i;
-//        }
-//        return esperado;
-//    }
+    @Override
+    public Map getPistas(Direccion d) {
+        TreeMap esperado = new TreeMap();
+        int i = 0;
+        while (i < this.cuadricula[0].length) {
+            int j = 0;
+            while (j < this.cuadricula.length) {
+                String palabra = this.getPalabraEn(j, i, d);
+                if (palabra != null) {
+                    esperado.put(this.getCelda(j, i).getIndexUsuario(),
+                    this.listaPalabras.get(palabra));
+                }
+                ++j;
+            }
+            ++i;
+        }
+        return esperado;
+    }
 
     @Override
     public Dimension getDimension() {
