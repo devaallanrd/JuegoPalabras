@@ -37,7 +37,7 @@ public class JuegoPalabras implements IJuegoPalabras {
                 mejorJuego = this.construirMejorJuego();
                 retries = 0;
             }
-            catch (ExcepcionJuego e) {
+            catch (Exception e) {
                 this.limpiarJuego();
                 if ((double)(++retries) <= 1000.0) continue;
                 retries = 1;
@@ -80,23 +80,23 @@ public class JuegoPalabras implements IJuegoPalabras {
             int j = 0;
             while (j < this.cuadricula[0].length) {
                 int nuevosPuntos;
-                if (this.posicionPermitida(word, i, j, Direccion.DOWN) && 
-                        ((    nuevosPuntos = this.puntosPalabra(word, i, j, Direccion.DOWN)) > puntos 
+                if (this.posicionPermitida(word, i, j, Direccion.Vertical) && 
+                        ((    nuevosPuntos = this.puntosPalabra(word, i, j, Direccion.Vertical)) > puntos 
                           ||  nuevosPuntos == puntos && this.rand.nextInt(area) != 0))
                 {
                     
                     puntos = nuevosPuntos;
                     x = i;
                     y = j;
-                    dir = Direccion.DOWN;
+                    dir = Direccion.Vertical;
                 }
-                if (this.posicionPermitida(word, i, j, Direccion.ACROSS) && 
-                        ((nuevosPuntos = this.puntosPalabra(word, i, j, Direccion.ACROSS)) > puntos 
+                if (this.posicionPermitida(word, i, j, Direccion.Horizontal) && 
+                        ((nuevosPuntos = this.puntosPalabra(word, i, j, Direccion.Horizontal)) > puntos 
                         || nuevosPuntos == puntos && this.rand.nextInt(area) != 0)) {
                     puntos = nuevosPuntos;
                     x = i;
                     y = j;
-                    dir = Direccion.ACROSS;
+                    dir = Direccion.Horizontal;
                 }
                 ++j;
             }
@@ -116,8 +116,8 @@ public class JuegoPalabras implements IJuegoPalabras {
             while (j < this.cuadricula[0].length) {
                 Celda cell = (Celda)this.getCelda(i, j);
                 cell.setContents(-1);
-                cell.setPalabra(null, Direccion.ACROSS);
-                cell.setPalabra(null, Direccion.DOWN);
+                cell.setPalabra(null, Direccion.Horizontal);
+                cell.setPalabra(null, Direccion.Vertical);
                 ++j;
             }
             ++i;
@@ -129,7 +129,7 @@ public class JuegoPalabras implements IJuegoPalabras {
      }
 
     //-----------------------------------------------------------------------------------
-    private LinkedList<Palabra> construirMejorJuego() throws ExcepcionJuego {
+    private LinkedList<Palabra> construirMejorJuego()  {
         String[] hsbc =  new String[this.listaPalabras.keySet().size()];
       
         String[] list = (String[]) this.listaPalabras.keySet().toArray(hsbc);
@@ -174,7 +174,7 @@ public class JuegoPalabras implements IJuegoPalabras {
                 ++n;
             }
             if (bestscore < 0) {
-                throw new ExcepcionJuego(this);
+              //  throw new ExcepcionJuego(this);
             }
             int k = this.rand.nextInt(numbest);
             numbest = 0;
@@ -197,7 +197,7 @@ public class JuegoPalabras implements IJuegoPalabras {
         return mejor;
     }
 
-    void construirJuego() throws ExcepcionJuego {
+    void construirJuego()  {
         ArrayList words = new ArrayList(this.listaPalabras.keySet());
         Collections.shuffle(words, this.rand);
         Iterator it = words.iterator();
@@ -206,7 +206,7 @@ public class JuegoPalabras implements IJuegoPalabras {
             Posicion pos = this.obtenerMejorPosicion(nextWord);
            
             if (pos == null) {
-                throw new ExcepcionJuego(this);
+               // throw new ExcepcionJuego(this);
             }
           
                 this.colocarPalabra(nextWord, pos);
@@ -273,7 +273,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     void colocarPalabra(String word, int x, int y, Direccion direction) {
         ((Celda)this.getCelda(x, y)).setPalabra(word, direction);
         word = word.toUpperCase();
-        if (direction == Direccion.ACROSS) {
+        if (direction == Direccion.Horizontal) {
             int i = 0;
             while (i < word.length()) {
                 ((Celda)this.getCelda(x + i, y)).setContents(word.charAt(i));
@@ -294,7 +294,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     boolean cabePalabra(String word, int x, int y, Direccion direccion) {
         int len = word.length();
-        if (direccion == Direccion.ACROSS) {
+        if (direccion == Direccion.Horizontal) {
             return x + len <= this.cuadricula.length;
         }
         return y + len <= this.cuadricula[0].length;
@@ -302,7 +302,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     boolean checkLetrasPrevias(String palabra, int x, int y, Direccion direccion) {
         int len = palabra.length();
-        if (direccion == Direccion.ACROSS) {
+        if (direccion == Direccion.Horizontal) {
             return x >= 1 && this.getCelda(x - 1, y).getContenido() != -1 
                     || x + len < this.cuadricula.length 
                     && this.getCelda(x + len, y).getContenido() != -1;
@@ -319,7 +319,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     private int contarLetrasChoque(String palabra, int x, int y, Direccion direccion) {
         int len = palabra.length();
         int count = 0;
-        if (direccion == Direccion.ACROSS) {
+        if (direccion == Direccion.Horizontal) {
             int i = 0;
             while (i < len) {
                 if (this.getCelda(x + i, y).getContenido() != -1) {
@@ -348,7 +348,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     }
 
     boolean checkLetrasAdyacentes(String palabra, int x, int y, Direccion direccion) {
-        if (direccion == Direccion.ACROSS) {
+        if (direccion == Direccion.Horizontal) {
             int i = x;
             while (i < x + palabra.length()) {
                 if (this.getCelda(i, y).getContenido() == -1 && (y > 0 && this.getCelda(i, y - 1).getContenido() != -1 || y + 1 < this.cuadricula[0].length && this.getCelda(i, y + 1).getContenido() != -1)) {
@@ -370,7 +370,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     boolean checkCaminoPalabra(String palabra, int x, int y, Direccion direccion) {
         int len = palabra.length();
-        if (direccion == Direccion.ACROSS) {
+        if (direccion == Direccion.Horizontal) {
             int i = x;
             while (i < x + len) {
                 if (this.getPalabraEn(i, y, direccion) != null) {
@@ -405,8 +405,8 @@ public class JuegoPalabras implements IJuegoPalabras {
            while (i < this.cuadricula[0].length) {
             int j = 0;
             while (j < this.cuadricula.length) {
-                if (this.getPalabraEn(j, i, Direccion.ACROSS) != null 
-                        || this.getPalabraEn(j, i, Direccion.DOWN) != null) {
+                if (this.getPalabraEn(j, i, Direccion.Horizontal) != null 
+                        || this.getPalabraEn(j, i, Direccion.Vertical) != null) {
                     ((Celda)this.getCelda(j, i)).setUserIndex(k++);
                 }
                 ++j;
@@ -423,10 +423,10 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     int puntosPalabra(String word, int x, int y, Direccion direction) {
         word = word.toUpperCase();
-        int score = direction.equals(Direccion.DOWN) ? 1 : 0;
+        int score = direction.equals(Direccion.Vertical) ? 1 : 0;
         int count = this.contarLetrasChoque(word, x, y, direction);
         int len = word.length();
-        if (direction == Direccion.ACROSS) {
+        if (direction == Direccion.Horizontal) {
             if (y != 0 && y != this.cuadricula[0].length - 1) {
                 ++score;
             }

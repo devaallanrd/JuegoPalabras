@@ -37,14 +37,14 @@ public class Celda implements ICeldas, Serializable {
         }
 
         public String getWord(Direccion direccion) {
-            if (direccion == Direccion.ACROSS) {
+            if (direccion == Direccion.Horizontal) {
                 return this.wordAcross;
             }
             return this.wordDown;
         }
 
         public void setPalabra(String palabra, Direccion direccion) {
-            if (direccion == Direccion.ACROSS) {
+            if (direccion == Direccion.Horizontal) {
                 this.wordAcross = palabra;
             } else {
                 this.wordDown = palabra;

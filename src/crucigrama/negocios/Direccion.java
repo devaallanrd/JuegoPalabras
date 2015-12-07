@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class Direccion {
-    public static final Direccion ACROSS = new Direccion("Across");
-    public static final Direccion DOWN = new Direccion("Down");
+    public static final Direccion Horizontal = new Direccion("Horizontal");
+    public static final Direccion Vertical = new Direccion("Vertical");
     private final String name;
 
     private Direccion(String name) {
@@ -28,7 +28,7 @@ public class Direccion {
     }
 
     public static Iterator iterator() {
-        return Arrays.asList(ACROSS, DOWN).iterator();
+        return Arrays.asList(Horizontal, Vertical).iterator();
     }
 }
 
