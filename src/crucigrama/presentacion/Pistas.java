@@ -34,17 +34,17 @@ extends JComponent {
         Iterator directions = Direccion.iterator();
         Document doc = testPane.getDocument();
         ArrayList<String[]> lines = new ArrayList<>();
-        while (directions.hasNext()) {
-            Direccion d = (Direccion)directions.next();
-            lines.add(this.appendString(doc, testPane, d.getNombre() + EOL, "bold"));
-            Iterator clues = this.puzzle.getPistas(d).entrySet().iterator();
-            while (clues.hasNext()) {
-                Map.Entry clue = (Map.Entry) clues.next();
-                lines.add(this.appendString(doc, testPane, clue.getKey() + "  " + clue.getValue() + EOL, "regular"));
-            }
-            if (!directions.hasNext()) continue;
-            lines.add(this.appendString(doc, testPane, EOL, "regular"));
-        }
+//        while (directions.hasNext()) {
+//            Direccion d = (Direccion)directions.next();
+//            lines.add(this.appendString(doc, testPane, d.getNombre() + EOL, "bold"));
+//            Iterator clues = this.puzzle.getPistas(d).entrySet().iterator();
+//            while (clues.hasNext()) {
+//                Map.Entry clue = (Map.Entry) clues.next();
+//                lines.add(this.appendString(doc, testPane, clue.getKey() + "  " + clue.getValue() + EOL, "regular"));
+//            }
+//            if (!directions.hasNext()) continue;
+//            lines.add(this.appendString(doc, testPane, EOL, "regular"));
+//        }
         Dimension referenceSize = testPane.getPreferredSize();
         int columns = (int)Math.sqrt(1.618033988749895 * (double)referenceSize.height / (double)referenceSize.width);
         double linesPerColumn = (double)lines.size() / (double)columns;

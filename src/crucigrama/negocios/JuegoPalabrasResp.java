@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-public class JuegoPalabras implements IJuegoPalabras {
+public class JuegoPalabrasResp implements IJuegoPalabras {
     
   
    
@@ -31,9 +31,8 @@ public class JuegoPalabras implements IJuegoPalabras {
     
     
 
-    public JuegoPalabras(String[] list) {
+    public JuegoPalabrasResp(String[] list) {
 //        this(listaPalabras, init, true);
-        listaPalabras = list;
         this.actualizaTam();
         int retries = 0;
         do {
@@ -58,7 +57,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     
     
-    JuegoPalabras(String[] listaPalabras, long init, boolean test) {
+    JuegoPalabrasResp(String[] listaPalabras, long init, boolean test) {
         this.listaPalabras = listaPalabras;
         this.rand = new Random(init);
     }
@@ -243,7 +242,7 @@ public class JuegoPalabras implements IJuegoPalabras {
 
     int contarLetras() {
         int count = 0;
-        LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
+         LinkedList words = new LinkedList(Arrays.asList(this.listaPalabras)); 
        // Iterator it = this.listaPalabras.keySet().iterator();
         Iterator it = words.iterator();
         while (it.hasNext()) {

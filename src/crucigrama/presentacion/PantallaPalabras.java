@@ -156,7 +156,7 @@ extends JComponent {
 
     public void genSeed(long seed) {
        
-        this.showPuzzle(new JuegoPalabras(this.wordList, seed));
+       // this.showPuzzle(new JuegoPalabras(this.wordList, seed));
     }
 
     private void showPuzzle(IJuegoPalabras p) {

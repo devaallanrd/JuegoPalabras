@@ -12,11 +12,11 @@ import java.util.Map;
 
 public interface IJuegoPalabras
 extends Serializable {
-    public Map getListaPalabras();
+    public String[] getListaPalabras();
 
     public ICeldas getCelda(int var1, int var2);
 
-    public Map getPistas(Direccion var1);
+   // public Map getPistas(Direccion var1);
 
     public Dimension getDimension();
 }

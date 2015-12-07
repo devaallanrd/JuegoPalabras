@@ -117,7 +117,7 @@ extends JComponent
 
     public void edit(ActionEvent e) {
         HashMap<String, Map> m = new HashMap<String, Map>();
-        m.put("wordList", this.puzzle.getListaPalabras());
+     //   m.put("wordList", this.puzzle.getListaPalabras());
 
         this.mgr.cambiarPantallas(m);
     }
