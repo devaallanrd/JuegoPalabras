@@ -5,10 +5,12 @@
  */
 package crucigrama.negocios;
 
+import crucigrama.modelo.Palabra;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -22,19 +24,17 @@ public class JuegoPalabras implements IJuegoPalabras {
     private Random rand;
     private ICeldas[][] cuadricula;
     private boolean siguiente = true;
+    private LinkedList<Palabra> mejorJuego;
 
-    public void initPalabras(){
-        listaPalabras.put("Hola", "Algo Aqui");
-        listaPalabras.put("Hello", "Other site");
-    }
+  
     public JuegoPalabras(Map listaPalabras, long init) {
         this(listaPalabras, init, true);
-        initPalabras();
+      
         this.actualizaTam();
         int retries = 0;
         do {
             try {
-                this.construirMejorJuego();
+                mejorJuego = this.construirMejorJuego();
                 retries = 0;
             }
             catch (ExcepcionJuego e) {
@@ -124,10 +124,17 @@ public class JuegoPalabras implements IJuegoPalabras {
         }
     }
 
-    private void construirMejorJuego() throws ExcepcionJuego {
+     public LinkedList<Palabra> getConstruirMejorJuego() {
+       return this.mejorJuego;
+     }
+
+    //-----------------------------------------------------------------------------------
+    private LinkedList<Palabra> construirMejorJuego() throws ExcepcionJuego {
         String[] hsbc =  new String[this.listaPalabras.keySet().size()];
       
         String[] list = (String[]) this.listaPalabras.keySet().toArray(hsbc);
+        
+        LinkedList<Palabra> mejor = new LinkedList<>();
         
         int remaining = list.length;
         boolean[] used = new boolean[list.length];
@@ -183,9 +190,11 @@ public class JuegoPalabras implements IJuegoPalabras {
             }
             pos = this.obtenerMejorPosicion(list[choose]);
             this.colocarPalabra(list[choose], pos);
+            mejor.add(new Palabra(list[choose], pos.x, pos.y, pos.direccion.getNombre()));
             used[choose] = true;
             --remaining;
         }
+        return mejor;
     }
 
     void construirJuego() throws ExcepcionJuego {
@@ -481,6 +490,7 @@ public class JuegoPalabras implements IJuegoPalabras {
         return new Dimension(this.cuadricula.length, this.cuadricula[0].length);
     }
 
+   
    
 
     

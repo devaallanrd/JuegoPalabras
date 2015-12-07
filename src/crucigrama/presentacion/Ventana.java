@@ -7,7 +7,9 @@ package crucigrama.presentacion;
 
 import crucigrama.modelo.Palabra;
 import crucigrama.negocios.JuegoPalabras;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -65,13 +67,26 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String[] list = new String[3];
-        list[0] = "Jose";
-        list[1] = "Allan";
-        list[2] = "Jose";
-     //   juego= new JuegoPalabras(list);
-       // LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
-     //   System.out.println(construirMejorJuego);
+     
+        
+        Map<String, String> listaPalabras = new HashMap<>();
+        listaPalabras.put("Hello", "It's me");
+        listaPalabras.put("Allan", "It's me");
+        listaPalabras.put("Rojas", "It's me");
+        
+        juego= new JuegoPalabras(listaPalabras, 3);
+        LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
+        
+        try{
+            int c = 0;
+            while(c!=construirMejorJuego.size()){
+                System.out.println(construirMejorJuego.get(c).toString());
+                c++;
+            }
+        }catch(Exception e){
+            
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

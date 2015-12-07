@@ -58,4 +58,10 @@ public class Palabra {
         this.dir = dir;
     }
 
+    @Override
+    public String toString() {
+        return "Palabra{" + "word=" + word + ", x=" + x + ", y=" + y + ", dir=" + dir + '}';
+    }
+
+    
 }
