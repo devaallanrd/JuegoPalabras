@@ -3,16 +3,18 @@
  * Noviembre,  2015
  * Universidad Técnica Nacional
  */
-package crucigrama.negocios;
+package crucigrama.modelo;
+
+import crucigrama.negocios.Direccion;
 
 /**
  *
  * @author aallanrd
  */
 public class Posicion {
-     Direccion direccion;
-        int x;
-        int y;
+        private Direccion direccion;
+        private int x;
+        private int y;
 
         public Posicion(int x, int y, Direccion dir) {
             this.direccion = dir;
@@ -28,4 +30,29 @@ public class Posicion {
         public String toString() {
             return "Position: (" + this.x + "," + this.y + " " + this.direccion + ")";
         }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+        
 }

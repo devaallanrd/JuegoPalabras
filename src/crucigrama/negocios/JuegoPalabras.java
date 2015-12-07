@@ -5,6 +5,7 @@
  */
 package crucigrama.negocios;
 
+import crucigrama.modelo.Posicion;
 import crucigrama.modelo.Palabra;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -190,7 +191,7 @@ public class JuegoPalabras implements IJuegoPalabras {
             }
             pos = this.obtenerMejorPosicion(list[choose]);
             this.colocarPalabra(list[choose], pos);
-            mejor.add(new Palabra(list[choose], pos.x, pos.y, pos.direccion.getNombre()));
+            mejor.add(new Palabra(list[choose], pos.getX(), pos.getY(), pos.getDireccion().getNombre()));
             used[choose] = true;
             --remaining;
         }
@@ -289,7 +290,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     }
 
     void colocarPalabra(String word, Posicion pos) {
-        this.colocarPalabra(word, pos.x, pos.y, pos.direccion);
+        this.colocarPalabra(word, pos.getX(), pos.getY(), pos.getDireccion());
     }
 
     boolean cabePalabra(String word, int x, int y, Direccion direccion) {
@@ -418,7 +419,7 @@ public class JuegoPalabras implements IJuegoPalabras {
     }
 
     int puntosPalabra(String word, Posicion pos) {
-        return this.puntosPalabra(word, pos.x, pos.y, pos.direccion);
+        return this.puntosPalabra(word, pos.getX(), pos.getY(), pos.getDireccion());
     }
 
     int puntosPalabra(String word, int x, int y, Direccion direction) {
