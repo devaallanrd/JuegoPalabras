@@ -68,7 +68,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      
-        
+        //Hello
         Map<String, String> listaPalabras = new HashMap<>();
         listaPalabras.put("Hello", "It's me");
         listaPalabras.put("Allan", "It's me");
