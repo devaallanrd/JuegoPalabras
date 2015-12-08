@@ -47,7 +47,7 @@ public class CuadroBO {
     private void CargarPistas(List lista){
         int c = 0;
         while(c!=controlPalabras.getListaPalabras().size()){
-            
+            lista.add(controlPalabras.getListaPalabras().get(c));
         }
     }
     
