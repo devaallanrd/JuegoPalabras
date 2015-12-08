@@ -192,9 +192,11 @@ public class JuegoPalabras implements IJuegoPalabras {
             pos = this.obtenerMejorPosicion(list[choose]);
             this.colocarPalabra(list[choose], pos);
             mejor.add(new Palabra(list[choose], pos.getX(), pos.getY(), pos.getDireccion().getNombre()));
+            //System.out.println("added" + list[choose]);
             used[choose] = true;
             --remaining;
         }
+        //System.out.println("//////" + mejor);
         return mejor;
     }
 

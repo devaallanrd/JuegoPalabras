@@ -20,17 +20,16 @@ Jugador jugador;
 CuadroBO cuadroBO;
 
 
-int time;
+    int time;
 
-    public JuegoBO(Jugador j, JPanel pnlC) {
-       cuadroBO = new CuadroBO(pnlC); 
+    
+    public JuegoBO(Jugador j, JPanel pnlC,String cat) {
+       cuadroBO = new CuadroBO(pnlC,cat); 
        jugador = j;
     }
 
-    public void newGame(JPanel pnlCrucigrama) {
-      // cuadroBO.pintarMatriz(pnlCrucigrama);
-    }
-    
+   
+   
     public void initTimer(JLabel label_timer){
          RelojModeloSwing modelo = new RelojModeloSwing();
          modelo.addObserver((Observable unObservable, Object dato) -> {

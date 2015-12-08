@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import crucigrama.modelo.Cuadro;
 import crucigrama.modelo.Palabra;
+import java.util.Map;
 
 
 /**
@@ -33,9 +34,9 @@ public class CuadroBO {
      int x = 4;
      int y = 4;
 
-    public CuadroBO(JPanel panel) {
+    public CuadroBO(JPanel panel, String cat) {
         
-        control = new PalabrasDAO();
+        control = new PalabrasDAO(cat);
         crucigrama = new Cuadro[13][13];
         for (int i = 0; i < crucigrama.length; i++) {
             for (int j = 0; j < crucigrama[i].length; j++) {
@@ -45,8 +46,10 @@ public class CuadroBO {
         getMejorJuego();
         pintarMatriz(panel);
     }
+    
     private void getMejorJuego(){
-        juego= new JuegoPalabras(control.getListaPalabras(), 3);
+        Map<String, String> listaPalabras = control.getListaPalabras();
+        juego= new JuegoPalabras(listaPalabras,listaPalabras.size() );
         
         LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
         
@@ -55,6 +58,7 @@ public class CuadroBO {
             while(c!=construirMejorJuego.size()){
                 Palabra get = construirMejorJuego.get(c);
                 colocar(get.getWord(), get.getY(), get.getX(),c, get.getDir());
+                System.out.println("Colocada" + get.getWord()  );
                 c++;
             }
         }catch(Exception e){
