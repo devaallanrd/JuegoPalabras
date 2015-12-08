@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 
+//Clase nos sirve para conectar con la Base de Datos
 public class ConexionDAO {
     
     private static final String DRIVER_NAME = "org.postgresql.Driver";

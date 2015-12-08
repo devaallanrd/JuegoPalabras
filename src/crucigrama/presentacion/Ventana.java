@@ -6,7 +6,9 @@
 package crucigrama.presentacion;
 
 import crucigrama.modelo.Jugador;
+import crucigrama.modelo.Tiempo;
 import crucigrama.negocios.JuegoBO;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 
@@ -351,4 +353,9 @@ public class Ventana extends javax.swing.JFrame {
        jTextField1.setText(buscarJugador.getNombre());
        jTextField2.setText(buscarJugador.getTime()+"");
     }
+
+    LinkedList<Tiempo> setMejores() {
+        return juegoBO.buscarMejoresTiempos();
+    }
+    
 }

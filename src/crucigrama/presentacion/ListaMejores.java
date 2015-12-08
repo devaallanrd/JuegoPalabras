@@ -5,6 +5,9 @@
  */
 package crucigrama.presentacion;
 
+import crucigrama.modelo.Tiempo;
+import java.util.LinkedList;
+
 /**
  *
  * @author aallanrd
@@ -14,9 +17,12 @@ public class ListaMejores extends javax.swing.JDialog {
     /**
      * Creates new form ListaMejores
      */
-    public ListaMejores(java.awt.Frame parent, boolean modal) {
+    public ListaMejores(Ventana parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //Setear los mejores
+        LinkedList<Tiempo> setMejores = parent.setMejores();
+        setMejores(setMejores);
     }
 
     /**
@@ -109,7 +115,7 @@ public class ListaMejores extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ListaMejores dialog = new ListaMejores(new javax.swing.JFrame(), true);
+                ListaMejores dialog = new ListaMejores(new Ventana(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -126,4 +132,15 @@ public class ListaMejores extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private java.awt.List list1;
     // End of variables declaration//GEN-END:variables
+
+   
+
+    private void setMejores(LinkedList<Tiempo> setMejores) {
+      
+     int c = 0;
+     while (c!= setMejores.size()){
+         list1.add(setMejores.toString());
+         c++;
+     }
+    }
 }

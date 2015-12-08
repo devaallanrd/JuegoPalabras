@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JDialog {
 
     Ventana padre;
+    
     /**
      * Creates new form Login
      * @param parent
