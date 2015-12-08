@@ -15,11 +15,13 @@ import javax.swing.SwingConstants;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import crucigrama.modelo.Cuadro;
 import crucigrama.modelo.Palabra;
+import java.awt.List;
 import java.util.Map;
 
 public class CuadroBO {
 
-    PalabrasDAO control;
+    //Control de palabras
+    PalabrasDAO controlPalabras;
     Cuadro[][] crucigrama;
     JuegoPalabras juego;
 
@@ -27,9 +29,10 @@ public class CuadroBO {
     int x = 4;
     int y = 4;
 
-    public CuadroBO(JPanel panel, int cat,boolean res) {
+    public CuadroBO(List listaPistas, JPanel panel, int cat,boolean res) {
 
-        control = new PalabrasDAO(cat);
+        controlPalabras = new PalabrasDAO(cat);
+        CargarPistas(listaPistas);
         crucigrama = new Cuadro[13][13];
         for (int i = 0; i < crucigrama.length; i++) {
             for (int j = 0; j < crucigrama[i].length; j++) {
@@ -39,9 +42,18 @@ public class CuadroBO {
         getMejorJuego();
         pintarMatriz(panel,res);
     }
-
+    
+    
+    private void CargarPistas(List lista){
+        int c = 0;
+        while(c!=controlPalabras.getListaPalabras().size()){
+            
+        }
+    }
+    
+    
     private void getMejorJuego() {
-        Map<String, String> listaPalabras = control.getListaPalabras();
+        Map<String, String> listaPalabras = controlPalabras.getListaPalabras();
         juego = new JuegoPalabras(listaPalabras, listaPalabras.size());
 
         LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();

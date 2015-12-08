@@ -28,19 +28,20 @@ public class PalabrasDAO {
     }
    
 
-    private void getPalabrasporCategoria(int cat){
-
+    private LinkedList<Palabra> getPalabrasporCategoria(int cat){
+LinkedList<Palabra> buscarPalabras = palabra.buscarPalabras(cat);
         try{
-         LinkedList<Palabra> buscarPalabras = palabra.buscarPalabras(cat);
+         
          int c = 0;
          while(c!=buscarPalabras.size()){
             Palabra get = buscarPalabras.get(c);
             listaPalabras.put(get.getWord(), get.getPista());
          }
+         
         }catch(Exception e){
             System.out.println("Ir a PalabrasDAO- Error Conexion");
         }
-        
+        return buscarPalabras;
     }
     
     

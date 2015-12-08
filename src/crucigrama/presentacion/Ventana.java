@@ -268,7 +268,7 @@ public class Ventana extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
      
         int selected = jComboBox1.getSelectedIndex();
-        boolean iniciar = juegoBO.iniciar(pnlCrucigrama, selected, jLabel3);
+        boolean iniciar = juegoBO.iniciar(list1,pnlCrucigrama, selected, jLabel3);
         if (!iniciar) {
             JOptionPane.showMessageDialog(this, "Debes iniciar Sesion Primero");
         }
@@ -277,7 +277,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
       int selected = jComboBox1.getSelectedIndex();
-        boolean resolver = juegoBO.resolver(pnlCrucigrama, selected, jLabel1);
+        boolean resolver = juegoBO.resolver(list1,pnlCrucigrama, selected, jLabel1);
         if (!resolver) {
             JOptionPane.showMessageDialog(this, "Debes iniciar Sesion Primero");
         }

@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import crucigrama.modelo.Jugador;
 import crucigrama.modelo.Tiempo;
+import java.awt.List;
 import java.util.LinkedList;
 
 /**
@@ -40,24 +41,24 @@ TiempoBO tiempo;
    
     
     
-    public boolean iniciar( JPanel pnlC,int cat,JLabel label) {
+    public boolean iniciar( List lista,JPanel pnlC,int cat,JLabel label) {
       
         if(jugador==null){
            
             return false;
         }else{
-           cuadroBO = new CuadroBO(pnlC,cat,false); 
+           cuadroBO = new CuadroBO(lista,pnlC,cat,false); 
            initTimer(label);
            return true;
         }
     }
     
-    public boolean resolver(JPanel pnlC, int cat,JLabel label){
+    public boolean resolver(List lista,JPanel pnlC, int cat,JLabel label){
         if(jugador==null){
            
             return false;
         }else{
-           cuadroBO = new CuadroBO(pnlC,cat,true); 
+           cuadroBO = new CuadroBO(lista,pnlC,cat,true); 
            stopTimer();
             System.out.println("Time: " + time);
            return true;
