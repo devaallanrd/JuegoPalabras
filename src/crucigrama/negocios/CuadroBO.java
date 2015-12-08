@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Creado por Pedro Abarca
+ * Noviembre,  2015
+ * Universidad Técnica Nacional
  */
 package crucigrama.negocios;
 
@@ -17,25 +17,18 @@ import crucigrama.modelo.Cuadro;
 import crucigrama.modelo.Palabra;
 import java.util.Map;
 
-
-/**
- *
- * @author Pedro
- */
 public class CuadroBO {
 
     PalabrasDAO control;
     Cuadro[][] crucigrama;
     JuegoPalabras juego;
-    
-    
-    
-    LinkedList<Palabra> palabras = new LinkedList<>();
-     int x = 4;
-     int y = 4;
 
-    public CuadroBO(JPanel panel, String cat) {
-        
+    LinkedList<Palabra> palabras = new LinkedList<>();
+    int x = 4;
+    int y = 4;
+
+    public CuadroBO(JPanel panel, String cat,boolean res) {
+
         control = new PalabrasDAO(cat);
         crucigrama = new Cuadro[13][13];
         for (int i = 0; i < crucigrama.length; i++) {
@@ -44,28 +37,28 @@ public class CuadroBO {
             }
         }
         getMejorJuego();
-        pintarMatriz(panel);
+        pintarMatriz(panel,res);
     }
-    
-    private void getMejorJuego(){
+
+    private void getMejorJuego() {
         Map<String, String> listaPalabras = control.getListaPalabras();
-        juego= new JuegoPalabras(listaPalabras,listaPalabras.size() );
-        
+        juego = new JuegoPalabras(listaPalabras, listaPalabras.size());
+
         LinkedList<Palabra> construirMejorJuego = juego.getConstruirMejorJuego();
-        
-        try{
+
+        try {
             int c = 0;
-            while(c!=construirMejorJuego.size()){
+            while (c != construirMejorJuego.size()) {
                 Palabra get = construirMejorJuego.get(c);
-                colocar(get.getWord(), get.getY(), get.getX(),c, get.getDir());
-                System.out.println("Colocada" + get.getWord()  );
+                colocar(get.getWord(), get.getY(), get.getX(), c, get.getDir());
+                //  System.out.println("Colocada" + get.getWord()  );
                 c++;
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }
-    
+
     //Coloca una palabra en la matriz principal
     public Cuadro[][] colocar(String word, int pY, int pX, int pista, String dir) {
         int lengthTotal = word.length() + pX;
@@ -73,22 +66,21 @@ public class CuadroBO {
 
             int wordC = 0;
             while (wordC != word.length()) {
-                
+
                 Cuadro c = new Cuadro(pista, word.charAt(wordC), false);
-                
+
                 if (dir.equals("Horizontal")) {
                     this.crucigrama[pY][pX + wordC] = c;
-                     //System.out.println(dir + "/" + word + " : Horizontal Colocado");
+                    //System.out.println(dir + "/" + word + " : Horizontal Colocado");
                 } else {
                     this.crucigrama[pY + wordC][pX] = c;
-                     //System.out.println(dir + "/" + word + " : Vertical Colocado");
+                    //System.out.println(dir + "/" + word + " : Vertical Colocado");
                 }
                 wordC++;
             }
-            
 
         } else {
-              System.out.println(word + " :  Sobrepasa Matriz");
+            //System.out.println(word + " :  Sobrepasa Matriz");
             return null;
         }
         return this.crucigrama;
@@ -97,57 +89,59 @@ public class CuadroBO {
     public Cuadro[][] getCrucigrama() {
         return crucigrama;
     }
-   
-    
-    private void pintarMatriz(JPanel pnlCrucigrama){
-        
+
+    private void pintarMatriz(JPanel pnlCrucigrama,boolean resolver) {
+
         pnlCrucigrama.removeAll();
         pnlCrucigrama.setVisible(false);
-        
-        
-         for (int i = 0; i < crucigrama.length; i++) {
+
+        for (int i = 0; i < crucigrama.length; i++) {
             for (int j = 0; j < crucigrama[i].length; j++) {
                 Cuadro c = crucigrama[i][j];
-                
+
                 JLabel label = new JLabel();
                 label.setText(c.getPista() == 0 ? "" : String.valueOf(c.getPista()));
                 label.setHorizontalAlignment(SwingConstants.CENTER);
 //                
-               JTextField txt = new JTextField();
+                JTextField txt = new JTextField();
                 txt.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
                 txt.setHorizontalAlignment(JTextField.CENTER);
-                txt.setText(c.getLetra()+"");
+                if(resolver){
+                 txt.setText(c.getLetra() + "");
+                }
+               
                 txt.setBorder(null);
-                if (c.esNegro()) {
-                    txt.setBackground(Color.BLACK);
+              
+                if (c.getLetra()==' '){
+                    txt.setBackground(Color.DARK_GRAY);
                     txt.setOpaque(true);
                     txt.setFocusable(false);
                 }
-               pnlCrucigrama.add(label, new AbsoluteConstraints(x, y, 12, 12));
+                pnlCrucigrama.add(label, new AbsoluteConstraints(x, y, 12, 12));
                 pnlCrucigrama.add(txt, new AbsoluteConstraints(x, y, 33, 33));
                 x += 30;
                 txt.addKeyListener(new java.awt.event.KeyAdapter() {
                     @Override
                     public void keyTyped(java.awt.event.KeyEvent evt) {
-                        if (txt.getText().length()== 1) {
+                        if (txt.getText().length() == 1) {
                             evt.consume();
                             char keyChar = evt.getKeyChar();
                             //System.out.println(keyChar + "/" + c.getLetra());
-                            if(keyChar==c.getLetra()){
-                                
-                                txt.setText(c.getLetra()+"");
+                            if (keyChar == c.getLetra()) {
+
+                                txt.setText(c.getLetra() + "");
                             }
                         }
                     }
                 });
             }
             y += 30;
-            x = 4;
+            x = 5;
         }
         pnlCrucigrama.setVisible(true);
         pnlCrucigrama.setBackground(Color.BLACK);
         pnlCrucigrama.setOpaque(true);
-       
+
     }
 
     public void setCrucigrama(Cuadro[][] crucigrama) {

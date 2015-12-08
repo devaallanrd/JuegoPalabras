@@ -12,9 +12,11 @@ package crucigrama.modelo;
 public class Palabra {
 
     String word;
+    String pista;
     int x;
     int y;
     String dir;
+    int categoria;
 
     public Palabra() {
     }
@@ -26,6 +28,24 @@ public class Palabra {
         this.dir = dir;
     }
 
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
+    }
+
+    
+    public String getPista() {
+        return pista;
+    }
+
+    public void setPista(String pista) {
+        this.pista = pista;
+    }
+
+    
     public String getWord() {
         return word;
     }

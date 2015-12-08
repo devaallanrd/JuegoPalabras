@@ -6,7 +6,6 @@
 package crucigrama.negocios;
 
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.Timer;
 import java.awt.event.*;
 import java.util.Date;
@@ -16,44 +15,34 @@ import java.util.Date;
  */
 public class RelojModeloSwing extends Observable
  {
+    
+    Timer timer;
+    int time ;
      /**
       * Lanza un timer cada segundo, avisando a los observadores de este
       * modelo del cambio. 
       */
      public RelojModeloSwing()
      {
-         Timer timer = new Timer (1000, new ActionListener ()
+         timer = new Timer (1000, new ActionListener ()
          {
              public void actionPerformed(ActionEvent e)
              {
                  setChanged();
                  notifyObservers (new Date());
+                 time = time + 1;
              }
          });
          timer.start();
      }
+
+    void stop() {
+       timer.stop();
+    }
+
+    public int getTime() {
+        return time;
+    }
      
-     /**
-      * Main para prueba de esta clase.
-      */
-     public static void main (String [] args)
-     {
-         RelojModeloSwing modelo = new RelojModeloSwing();
-         modelo.addObserver(new Observer()
-         {
-             public void update (Observable unObservable, Object dato)
-             {
-                 System.out.println (dato);
-             }
-         });
-         
-         // Espera de 10 segundos para que el programa no termine
-         // inmediatamente
-         try
-         {
-            Thread.currentThread().sleep (5000);
-         } catch (Exception e)
-         {
-         }
-     }
+    
 }
