@@ -136,7 +136,9 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+         String name = jTextField1.getText();
+       String pass = jTextField2.getText();
+        padre.juegoBO.registrarJugador(name,pass);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
