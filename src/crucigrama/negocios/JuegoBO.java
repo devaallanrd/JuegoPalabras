@@ -35,7 +35,7 @@ RelojModeloSwing modeloTiempo ;
    
     
     
-    public boolean iniciar( JPanel pnlC,String cat,JLabel label) {
+    public boolean iniciar( JPanel pnlC,int cat,JLabel label) {
       
         if(jugador==null){
            
@@ -47,7 +47,7 @@ RelojModeloSwing modeloTiempo ;
         }
     }
     
-    public boolean resolver(JPanel pnlC, String cat,JLabel label){
+    public boolean resolver(JPanel pnlC, int cat,JLabel label){
         if(jugador==null){
            
             return false;

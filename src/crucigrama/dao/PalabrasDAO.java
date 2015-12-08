@@ -5,7 +5,9 @@
  */
 package crucigrama.dao;
 
+import crucigrama.modelo.Palabra;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -14,51 +16,34 @@ import java.util.Map;
  */
 public class PalabrasDAO {
     
+     PalabraDAO palabra;
      Map<String, String> listaPalabras = new HashMap<>();
        
 
-    public PalabrasDAO(String cat) {
+    public PalabrasDAO(int cat) {
             listaPalabras = new HashMap<>();
             getPalabrasporCategoria(cat);
+            palabra = new PalabraDAO();
             
     }
    
 
-    private void getPalabrasporCategoria(String cat){
+    private void getPalabrasporCategoria(int cat){
 
-          
-          loadGeneral();
-
+        try{
+         LinkedList<Palabra> buscarPalabras = palabra.buscarPalabras(cat);
+         int c = 0;
+         while(c!=buscarPalabras.size()){
+            Palabra get = buscarPalabras.get(c);
+            listaPalabras.put(get.getWord(), get.getPista());
+         }
+        }catch(Exception e){
+            System.out.println("Ir a PalabrasDAO- Error Conexion");
+        }
         
     }
     
-    public void loadGeneral(){
-        listaPalabras.put("Allan", "It's me");
-        listaPalabras.put("Rojas", "It's me");
-        listaPalabras.put("Duran", "It's me");
-        listaPalabras.put("Josue", "It's me");
-        listaPalabras.put("Daniel", "It's me");
-        listaPalabras.put("Crucigrama", "It's me");
-        
-    }
-//     public void loadDeportes(){
-//       
-//       
-//        listaPalabras.put("Tu", "It's me");
-//        listaPalabras.put("Futbol", "It's me");
-//        
-//        listaPalabras.put("Basket", "It's me");
-//    }
-//      public void loadGeografia(){
-//        listaPalabras.put("CostaRica", "It's me");
-//        listaPalabras.put("SanJose", "It's me");
-//        listaPalabras.put("Avion", "It's me");
-//    }
-//       public void loadMusica(){
-//        listaPalabras.put("Guitarra", "It's me");
-//        listaPalabras.put("Bateria", "It's me");
-//        listaPalabras.put("Bajo", "It's me");
-//    }
+    
     
     public Map<String, String> getListaPalabras() {
         return listaPalabras;

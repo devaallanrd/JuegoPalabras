@@ -27,7 +27,7 @@ public class CuadroBO {
     int x = 4;
     int y = 4;
 
-    public CuadroBO(JPanel panel, String cat,boolean res) {
+    public CuadroBO(JPanel panel, int cat,boolean res) {
 
         control = new PalabrasDAO(cat);
         crucigrama = new Cuadro[13][13];
