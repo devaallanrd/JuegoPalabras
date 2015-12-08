@@ -33,20 +33,13 @@ public class PalabrasDAO {
     }
     
     public void loadGeneral(){
-        listaPalabras.put("Pedro", "It's me");
-        listaPalabras.put("juan", "It's me");
-        listaPalabras.put("Mendez", "It's me");
+        listaPalabras.put("Allan", "It's me");
+        listaPalabras.put("Rojas", "It's me");
+        listaPalabras.put("Duran", "It's me");
         listaPalabras.put("Josue", "It's me");
-        listaPalabras.put("Arroz", "It's me");
-        listaPalabras.put("Boton", "It's me");
-        listaPalabras.put("Pez", "It's me");
-        listaPalabras.put("Consigo", "It's me");
-        listaPalabras.put("Mismo", "It's me");
-        listaPalabras.put("Planea", "It's me");
-        listaPalabras.put("Sustituir", "It's me");
-        listaPalabras.put("con", "It's me");
-        listaPalabras.put("aquella", "It's me");
-        listaPalabras.put("pasada", "It's me");
+        listaPalabras.put("Daniel", "It's me");
+        listaPalabras.put("Crucigrama", "It's me");
+        
     }
 //     public void loadDeportes(){
 //       
