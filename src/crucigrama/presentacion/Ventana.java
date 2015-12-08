@@ -20,6 +20,7 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         initComponents();
         juegoBO = new JuegoBO();
+        juegoBO.buscarCategorias();
         setLocationRelativeTo(null);
     }
 
@@ -54,7 +55,6 @@ public class Ventana extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,14 +233,6 @@ public class Ventana extends javax.swing.JFrame {
 
         jMenu2.setText("Edicion");
 
-        jMenuItem1.setText("RegistrarPalabras");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
-
         jMenuItem2.setText("VerMejoresRecords");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,12 +283,9 @@ public class Ventana extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-      new AddPalabras(this, true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
      new ListaMejores(this, true).setVisible(true);
+     juegoBO.buscarMejoresTiempos();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
@@ -348,7 +337,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

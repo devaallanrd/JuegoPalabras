@@ -71,4 +71,31 @@ public class PalabraDAO {
         return new LinkedList();
 
     } 
+
+    public LinkedList buscarCategorias() {
+    String sql = "SELECT * "
+                + "  FROM public.categorias  ";
+        
+        try (Connection c = ConexionDAO.conexion()) {
+            try (PreparedStatement stmt = c.prepareStatement(sql)) {
+                
+                
+                ResultSet rs = stmt.executeQuery();
+               LinkedList<Palabra> plist = new LinkedList<>();
+                while (rs.next()) {
+                    Palabra palabra = new Palabra();
+                    palabra.setWord(rs.getString("palabra"));
+                    palabra.setPista(rs.getString("pista"));
+                    plist.add(palabra);
+                }
+                return plist;
+
+            } catch (Exception e) {
+                System.out.println("1: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("2: " + e.getMessage());
+        }
+        return new LinkedList();
+    }
 }

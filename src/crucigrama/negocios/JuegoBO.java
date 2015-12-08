@@ -6,11 +6,12 @@
 package crucigrama.negocios;
 
 //import crucigrama.dao.JugadoresDAO;
-import crucigrama.dao.JugadorDAO;
 import java.util.Observable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import crucigrama.modelo.Jugador;
+import crucigrama.modelo.Tiempo;
+import java.util.LinkedList;
 
 /**
  *
@@ -20,9 +21,11 @@ public class JuegoBO {
 
 //JugadoresDAO jugdao;  
 JugadorBO jugbo;
+PalabraBO palabras;
 Jugador jugador;
 CuadroBO cuadroBO;
 RelojModeloSwing modeloTiempo ;
+TiempoBO tiempo;
 
 
     int time;
@@ -30,6 +33,8 @@ RelojModeloSwing modeloTiempo ;
     public JuegoBO() {
         //jugdao = new JugadoresDAO();
         jugbo = new JugadorBO();
+        palabras = new PalabraBO();
+        tiempo = new TiempoBO();
     }
 
    
@@ -85,6 +90,14 @@ RelojModeloSwing modeloTiempo ;
     private void stopTimer() {
       modeloTiempo.stop();
       
+    }
+
+    public void buscarCategorias() {
+      palabras.buscarCategorias();
+    }
+
+    public LinkedList<Tiempo> buscarMejoresTiempos() {
+        return tiempo.buscarTiempos(100);
     }
 
    

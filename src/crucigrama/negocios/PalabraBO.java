@@ -30,6 +30,10 @@ public class PalabraBO {
         return pdao.buscarPalabras(categoria);
     }
 
+    public LinkedList buscarCategorias() {
+       return pdao.buscarCategorias();
+    }
+
     
     
 }
